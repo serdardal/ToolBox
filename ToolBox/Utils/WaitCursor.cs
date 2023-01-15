@@ -1,25 +1,36 @@
 ﻿namespace ToolBox.Utils
 {
-    public class WaitCursor : IDisposable
+    public static class WaitCursor
     {
-        private readonly Cursor? OldCursor;
-        private static bool IsWaitCursorActive;
-        private WaitCursor()
-        {
-            IsWaitCursorActive = true;
-            OldCursor = Cursor.Current;
-            Cursor.Current = Cursors.WaitCursor;
+        private static List<WaitCursorSubscriber> Subscribers { get; } = new List<WaitCursorSubscriber>();
+
+        private static void UnSubscribe(WaitCursorSubscriber subscriber) {
+            Subscribers.Remove(subscriber);
+            if(!Subscribers.Any())
+            {
+                Application.UseWaitCursor = false;
+            }
         }
 
-        public void Dispose()
+        public static WaitCursorSubscriber Subscribe()
         {
-            Cursor.Current = OldCursor;
-            IsWaitCursorActive = false;
+            if (!Subscribers.Any())
+            {
+                Application.UseWaitCursor = true;
+            }
+
+            var newSubscriber = new WaitCursorSubscriber();
+            Subscribers.Add(newSubscriber);
+
+            return newSubscriber;
         }
-        
-        public static IDisposable? BeginWaitCursorBlock()
+
+        public class WaitCursorSubscriber : IDisposable
         {
-            return (!IsWaitCursorActive) ? (IDisposable)new WaitCursor() : null;
+            public void Dispose()
+            {
+                UnSubscribe(this);
+            }
         }
-    }
+    }    
 }

@@ -66,7 +66,7 @@ namespace ToolBox.Tools.Common
 
         public void Run()
         {
-            using (WaitCursor.BeginWaitCursorBlock())
+            using (WaitCursor.Subscribe())
             {
                 GetFiles();
             }

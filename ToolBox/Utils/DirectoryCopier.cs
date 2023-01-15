@@ -27,10 +27,12 @@ namespace ToolBox.Utils
 
         private static void BgWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            CopyDirectory(SourceDir, DestinationDir);
+            using (WaitCursor.Subscribe()) {
+                CopyDirectory(SourceDir, DestinationDir);
 
-            // delay for progress bar visual update complete
-            Thread.Sleep(1000);
+                // delay for progress bar visual update complete
+                Thread.Sleep(1000);            
+            }
         }
 
         private static void BgWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)

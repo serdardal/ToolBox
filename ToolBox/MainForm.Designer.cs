@@ -32,6 +32,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.runButton = new System.Windows.Forms.Button();
             this.toolLabel = new System.Windows.Forms.Label();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // toolComboBox
@@ -65,11 +66,21 @@
             this.toolLabel.TabIndex = 2;
             this.toolLabel.Text = "Please select tool!";
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(27, 67);
+            this.progressBar.MarqueeAnimationSpeed = 300;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(493, 15);
+            this.progressBar.TabIndex = 3;
+            this.progressBar.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(551, 344);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.toolLabel);
             this.Controls.Add(this.runButton);
             this.Controls.Add(this.toolComboBox);
@@ -87,5 +98,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button runButton;
         private System.Windows.Forms.Label toolLabel;
+        private ProgressBar progressBar;
     }
 }

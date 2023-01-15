@@ -13,9 +13,9 @@ namespace ToolBox
             InitializeComponent();
 
             Tools.AddRange(new Tool[] { 
-                new IsMyPcOn(),
-                new AngryParrot(),
-                new LightSwitch()
+                new IsMyPcOn(UpdateProgressBarPercentage, RemoveProgressBar),
+                new AngryParrot(UpdateProgressBarPercentage, RemoveProgressBar),
+                new LightSwitch(UpdateProgressBarPercentage, RemoveProgressBar)
             });
 
             SetToolComboBoxItems();
@@ -54,6 +54,19 @@ namespace ToolBox
             ActiveUserControl.TabIndex = 1;
 
             Controls.Add(ActiveUserControl);
+        }
+
+        private void UpdateProgressBarPercentage(int percentage) {
+            if(!progressBar.Visible)
+                progressBar.Visible = true;
+
+            progressBar.Value = percentage;
+        }
+
+        private void RemoveProgressBar()
+        {
+            progressBar.Visible = false;
+            progressBar.Value = 0;
         }
 
         private void runButton_Click(object sender, EventArgs e)

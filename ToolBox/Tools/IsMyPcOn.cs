@@ -5,9 +5,14 @@ namespace ToolBox.Tools
 {
     public class IsMyPcOn : Tool
     {
-        public IsMyPcOn() : base("Is My PC On?",
+        public IsMyPcOn(DirectoryCopier.ProgressChangeCallback updateProgressBarPercentage,
+            DirectoryCopier.CompletedCallback removeProgressBar)
+            
+            : base("Is My PC On?",
             @$"{FileHelper.TOOLS_SHARED_BASE_PATH}\IsMyPcOn",
-            @$"{FileHelper.TOOLS_LOCAL_BASE_PATH}\IsMyPcOn")
+            @$"{FileHelper.TOOLS_LOCAL_BASE_PATH}\IsMyPcOn",
+            updateProgressBarPercentage,
+            removeProgressBar)
         {
 
         }

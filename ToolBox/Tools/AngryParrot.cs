@@ -7,9 +7,14 @@ namespace ToolBox.Tools
     public class AngryParrot : Tool
     {
         private UserControlWithTextBox? UserControlWithTextBox { get; set; }
-        public AngryParrot() : base("Angry Parrot",
+        public AngryParrot(DirectoryCopier.ProgressChangeCallback updateProgressBarPercentage,
+            DirectoryCopier.CompletedCallback removeProgressBar)
+            
+            : base("Angry Parrot",
             @$"{FileHelper.TOOLS_SHARED_BASE_PATH}\AngryParrot",
-            @$"{FileHelper.TOOLS_LOCAL_BASE_PATH}\AngryParrot")
+            @$"{FileHelper.TOOLS_LOCAL_BASE_PATH}\AngryParrot",
+            updateProgressBarPercentage,
+            removeProgressBar)
         {
             
         }

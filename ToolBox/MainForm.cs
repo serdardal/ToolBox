@@ -1,5 +1,6 @@
 using ToolBox.Tools;
 using ToolBox.Tools.Common;
+using ToolBox.Utils;
 
 namespace ToolBox
 {
@@ -12,13 +13,15 @@ namespace ToolBox
         {
             InitializeComponent();
 
-            Tools.AddRange(new Tool[] { 
+            Tools.AddRange(new Tool[] {
                 new IsMyPcOn(UpdateProgressBarPercentage, RemoveProgressBar),
                 new AngryParrot(UpdateProgressBarPercentage, RemoveProgressBar),
                 new LightSwitch(UpdateProgressBarPercentage, RemoveProgressBar)
             });
 
             SetToolComboBoxItems();
+
+            WaitCursor.AddWaitChangeCallback(DisableControls);
         }
 
         private void SetToolComboBoxItems()
@@ -56,8 +59,9 @@ namespace ToolBox
             Controls.Add(ActiveUserControl);
         }
 
-        private void UpdateProgressBarPercentage(int percentage) {
-            if(!progressBar.Visible)
+        private void UpdateProgressBarPercentage(int percentage)
+        {
+            if (!progressBar.Visible)
                 progressBar.Visible = true;
 
             progressBar.Value = percentage;
@@ -67,6 +71,21 @@ namespace ToolBox
         {
             progressBar.Visible = false;
             progressBar.Value = 0;
+        }
+
+        private void DisableControls(bool disabled)
+        {
+            var disableChangeControls = new Control[]{
+                toolComboBox,
+                runButton
+            };
+
+            // method can be called from another thread
+            // preventing cross-thread exception with .Invoke method
+            foreach (var control in disableChangeControls)
+            {
+                control.Invoke(delegate { control.Enabled = !disabled; });
+            }
         }
 
         private void runButton_Click(object sender, EventArgs e)

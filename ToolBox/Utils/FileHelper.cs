@@ -5,8 +5,22 @@ namespace ToolBox.Utils
     public static class FileHelper
     {
         public static readonly string CURRENT_PATH = Environment.CurrentDirectory;
-        public static readonly string TOOLS_SHARED_BASE_PATH = @$"{CURRENT_PATH}\..\..\..\..\SomeSharedToolsFolder";
+
+        public static readonly string UPDATER_PATH = Debugger.IsAttached ?
+            @$"{CURRENT_PATH}\..\..\..\Updater\updater.ps1"
+                : @$"{CURRENT_PATH}\Updater\updater.ps1";
+
+        public static readonly string TOOLS_SHARED_BASE_PATH = Debugger.IsAttached ?
+            @$"{CURRENT_PATH}\..\..\..\..\SomeSharedToolsFolder"
+                : @"C:\SomeSharedToolsFolder";
+
         public static readonly string TOOLS_LOCAL_BASE_PATH = @$"{CURRENT_PATH}\Tools";
+
+        public static readonly string SELF_SHARED_PATH = @"C:\SomeSharedToolsFolder\ToolBoxPublish";
+
+        public static readonly string SELF_LOCAL_PATH = Debugger.IsAttached ?
+            @$"{CURRENT_PATH}\..\..\..\"
+                : CURRENT_PATH;
 
         public static void StartPowershellProcessAsAdmin(string workingDirectory, string command)
         {

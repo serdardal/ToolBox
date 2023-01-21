@@ -33,6 +33,10 @@
             this.runButton = new System.Windows.Forms.Button();
             this.toolLabel = new System.Windows.Forms.Label();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.openSourceFolderButton = new System.Windows.Forms.ToolStripButton();
+            this.openLocalFolderButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolComboBox
@@ -75,11 +79,46 @@
             this.progressBar.TabIndex = 3;
             this.progressBar.Visible = false;
             // 
+            // toolStrip
+            // 
+            this.toolStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openSourceFolderButton,
+            this.openLocalFolderButton});
+            this.toolStrip.Location = new System.Drawing.Point(0, 317);
+            this.toolStrip.Name = "toolStrip";
+            this.toolStrip.Size = new System.Drawing.Size(551, 27);
+            this.toolStrip.TabIndex = 4;
+            this.toolStrip.Text = "toolStrip1";
+            this.toolStrip.Visible = false;
+            // 
+            // openSourceFolderButton
+            // 
+            this.openSourceFolderButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.openSourceFolderButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openSourceFolderButton.Name = "openSourceFolderButton";
+            this.openSourceFolderButton.Size = new System.Drawing.Size(104, 24);
+            this.openSourceFolderButton.Text = "Source Folder";
+            this.openSourceFolderButton.ToolTipText = "Open Source Folder";
+            this.openSourceFolderButton.Click += new System.EventHandler(this.openSourceFolderButton_Click);
+            // 
+            // openLocalFolderButton
+            // 
+            this.openLocalFolderButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.openLocalFolderButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openLocalFolderButton.Name = "openLocalFolderButton";
+            this.openLocalFolderButton.Size = new System.Drawing.Size(94, 24);
+            this.openLocalFolderButton.Text = "Local Folder";
+            this.openLocalFolderButton.ToolTipText = "Open Local Folder";
+            this.openLocalFolderButton.Click += new System.EventHandler(this.openLocalFolderButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(551, 344);
+            this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.toolLabel);
             this.Controls.Add(this.runButton);
@@ -87,6 +126,8 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainForm";
             this.Text = "Super Tool Box";
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -99,5 +140,8 @@
         private System.Windows.Forms.Button runButton;
         private System.Windows.Forms.Label toolLabel;
         private ProgressBar progressBar;
+        private ToolStrip toolStrip;
+        private ToolStripButton openSourceFolderButton;
+        private ToolStripButton openLocalFolderButton;
     }
 }

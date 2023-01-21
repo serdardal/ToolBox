@@ -26,18 +26,19 @@ namespace ToolBox.Tools.Common
         public abstract UserControl? GetUserControl();
         public abstract void Launch();
 
-        public bool DeleteLocalFiles()
+        private bool DeleteLocalFiles()
         {
             Directory.Delete(LocalPath, true);
             return true;
         }
 
-        private void OnCopyCompleted() {
+        private void OnCopyCompleted()
+        {
             RemoveProgressBar();
             CheckVersions();
         }
 
-        public void GetFiles()
+        private void GetFiles()
         {
             if (!Directory.Exists(LocalPath))
             {
@@ -49,7 +50,7 @@ namespace ToolBox.Tools.Common
             }
         }
 
-        public void CheckVersions()
+        private void CheckVersions()
         {
             var sourceVersion = FileHelper.GetFileKeyValueContent(@$"{SourcePath}\appInfo.txt")["version"];
             var localVersion = FileHelper.GetFileKeyValueContent(@$"{LocalPath}\appInfo.txt")["version"];
@@ -59,7 +60,8 @@ namespace ToolBox.Tools.Common
                 DeleteLocalFiles();
                 GetFiles();
             }
-            else {
+            else
+            {
                 Launch();
             }
         }

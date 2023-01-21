@@ -38,25 +38,39 @@ namespace ToolBox
             if (resultIndex == -1)
                 return;
 
-            // hide label when item selected.
-            if (toolLabel.Visible)
-                toolLabel.Visible = false;
-
             Controls.Remove(ActiveUserControl);
             ActiveUserControl?.Dispose();
 
             SelectedTool = Tools[resultIndex];
             ActiveUserControl = SelectedTool.GetUserControl();
 
-            if (ActiveUserControl == null)
-                return;
+            AdjustFormControls();
+        }
 
-            ActiveUserControl.Location = new Point(24, 80);
-            ActiveUserControl.Name = "activeUserControl";
-            ActiveUserControl.Size = new Size(450, 300);
-            ActiveUserControl.TabIndex = 1;
+        private void AdjustFormControls()
+        {
+            // hide label when item selected.
+            if (toolLabel.Visible)
+                toolLabel.Visible = false;
 
-            Controls.Add(ActiveUserControl);
+            // make toolStrip visible
+            if (!toolStrip.Visible)
+                toolStrip.Visible = true;
+
+            if (SelectedTool != null)
+            {
+                openLocalFolderButton.Enabled = FileHelper.IsDirectoryExists(SelectedTool.LocalPath);
+            }
+
+            if (ActiveUserControl != null && !Controls.Contains(ActiveUserControl))
+            {
+                ActiveUserControl.Location = new Point(24, 80);
+                ActiveUserControl.Name = "activeUserControl";
+                ActiveUserControl.Size = new Size(450, 300);
+                ActiveUserControl.TabIndex = 1;
+
+                Controls.Add(ActiveUserControl);
+            }
         }
 
         private void UpdateProgressBarPercentage(int percentage)
@@ -71,6 +85,8 @@ namespace ToolBox
         {
             progressBar.Visible = false;
             progressBar.Value = 0;
+
+            AdjustFormControls();
         }
 
         private void DisableControls(bool disabled)
@@ -91,6 +107,22 @@ namespace ToolBox
         private void runButton_Click(object sender, EventArgs e)
         {
             SelectedTool?.Run();
+        }
+
+        private void openSourceFolderButton_Click(object sender, EventArgs e)
+        {
+            if (SelectedTool == null)
+                return;
+
+            FileHelper.OpenFolderInExplorer(SelectedTool.SourcePath);
+        }
+
+        private void openLocalFolderButton_Click(object sender, EventArgs e)
+        {
+            if (SelectedTool == null)
+                return;
+
+            FileHelper.OpenFolderInExplorer(SelectedTool.LocalPath);
         }
     }
 }

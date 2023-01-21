@@ -49,5 +49,23 @@ namespace ToolBox.Utils
 
             return dict;
         }
+
+        public static bool IsDirectoryExists(string directory)
+        {
+            var dirInfo = new DirectoryInfo(directory);
+            return dirInfo.Exists;
+        }
+
+        public static void OpenFolderInExplorer(string folderPath)
+        {
+            if (!IsDirectoryExists(folderPath))
+            {
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: "
+                + folderPath);
+            }
+
+            Process.Start("explorer.exe", folderPath);
+        }
     }
 }

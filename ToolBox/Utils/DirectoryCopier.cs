@@ -19,7 +19,8 @@ namespace ToolBox.Utils
         private static CompletedCallback? _CompletedCallback { get; set; }
 
 
-        private static void ResetCopyProps() {
+        private static void ResetCopyProps()
+        {
             IsFirstIteration = true;
             AllFilesCount = 0;
             ProcessedFileCount = 0;
@@ -27,11 +28,12 @@ namespace ToolBox.Utils
 
         private static void BgWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            using (WaitCursor.Subscribe()) {
+            using (WaitCursor.Subscribe())
+            {
                 CopyDirectory(SourceDir, DestinationDir);
 
                 // delay for progress bar visual update complete
-                Thread.Sleep(1000);            
+                Thread.Sleep(1000);
             }
         }
 
@@ -85,7 +87,7 @@ namespace ToolBox.Utils
                 ProcessedFileCount++;
 
                 // progress change notify
-                var percentage = (int) ((ProcessedFileCount / (decimal)AllFilesCount) * 100);
+                var percentage = (int)((ProcessedFileCount / (decimal)AllFilesCount) * 100);
                 BackgroundWorker?.ReportProgress(percentage);
             }
 
@@ -96,7 +98,8 @@ namespace ToolBox.Utils
             }
         }
 
-        private static void RunBackgroundWorker() {
+        private static void RunBackgroundWorker()
+        {
             BackgroundWorker = new BackgroundWorker
             {
                 WorkerReportsProgress = true
@@ -107,8 +110,8 @@ namespace ToolBox.Utils
             BackgroundWorker.RunWorkerAsync();
         }
 
-        public static void Copy(string sourceDir, string destinationDir, 
-            ProgressChangeCallback progressChangeCallback, CompletedCallback completedCallback)
+        public static void Copy(string sourceDir, string destinationDir,
+            ProgressChangeCallback? progressChangeCallback, CompletedCallback? completedCallback)
         {
             SourceDir = sourceDir;
             DestinationDir = destinationDir;

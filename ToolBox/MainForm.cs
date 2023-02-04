@@ -14,9 +14,9 @@ namespace ToolBox
             InitializeComponent();
 
             Tools.AddRange(new Tool[] {
-                new IsMyPcOn(UpdateProgressBarPercentage, RemoveProgressBar),
-                new AngryParrot(UpdateProgressBarPercentage, RemoveProgressBar),
-                new LightSwitch(UpdateProgressBarPercentage, RemoveProgressBar)
+                new IsMyPcOn(),
+                new AngryParrot(),
+                new LightSwitch()
             });
 
             SetToolComboBoxItems();
@@ -42,6 +42,7 @@ namespace ToolBox
             ActiveUserControl?.Dispose();
 
             SelectedTool = Tools[resultIndex];
+            SelectedTool.SetProgressCallbacks(UpdateProgressBarPercentage, RemoveProgressBar);
             ActiveUserControl = SelectedTool.GetUserControl();
 
             AdjustFormControls();
@@ -93,7 +94,8 @@ namespace ToolBox
         {
             var disableChangeControls = new Control[]{
                 toolComboBox,
-                runButton
+                runButton,
+                toolStrip
             };
 
             // method can be called from another thread

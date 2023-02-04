@@ -8,23 +8,31 @@ namespace ToolBox.Tools.Common
         public string SourcePath { get; private set; }
         public string LocalPath { get; private set; }
 
-        private DirectoryCopier.ProgressChangeCallback UpdateProgressBarPercentage { get; set; }
-        private DirectoryCopier.CompletedCallback RemoveProgressBar { get; set; }
+        private DirectoryCopier.ProgressChangeCallback? ProgressChangeCallback { get; set; }
+        private DirectoryCopier.CompletedCallback? ProgressCompletedCallback { get; set; }
 
-        public Tool(string name, string sourcePath, string localPath,
-            DirectoryCopier.ProgressChangeCallback updateProgressBarPercentage,
-            DirectoryCopier.CompletedCallback removeProgressBar)
+        public Tool(string name, string sourcePath, string localPath)
         {
             Name = name;
             SourcePath = sourcePath;
             LocalPath = localPath;
-            UpdateProgressBarPercentage = updateProgressBarPercentage;
-            RemoveProgressBar = removeProgressBar;
         }
 
         // every concrete tool implements its own logic for these methods.
         public abstract UserControl? GetUserControl();
         public abstract void Launch();
+
+        public void SetProgressCallbacks(DirectoryCopier.ProgressChangeCallback progressChangeCallback,
+            DirectoryCopier.CompletedCallback progressCompletedCallback)
+        {
+            ProgressChangeCallback = progressChangeCallback;
+            ProgressCompletedCallback = progressCompletedCallback;
+        }
+        private void OnCopyCompleted()
+        {
+            ProgressCompletedCallback?.Invoke();
+            CheckVersions();
+        }
 
         private bool DeleteLocalFiles()
         {
@@ -32,17 +40,11 @@ namespace ToolBox.Tools.Common
             return true;
         }
 
-        private void OnCopyCompleted()
-        {
-            RemoveProgressBar();
-            CheckVersions();
-        }
-
         private void GetFiles()
         {
             if (!Directory.Exists(LocalPath))
             {
-                DirectoryCopier.Copy(SourcePath, LocalPath, UpdateProgressBarPercentage, OnCopyCompleted);
+                DirectoryCopier.Copy(SourcePath, LocalPath, ProgressChangeCallback, OnCopyCompleted);
             }
             else
             {

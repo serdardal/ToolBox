@@ -56,7 +56,7 @@
             this.runButton.Name = "runButton";
             this.runButton.Size = new System.Drawing.Size(86, 31);
             this.runButton.TabIndex = 1;
-            this.runButton.Text = "Run";
+            this.runButton.Text = "Launch";
             this.runButton.UseVisualStyleBackColor = true;
             this.runButton.Click += new System.EventHandler(this.runButton_Click);
             // 
@@ -125,6 +125,7 @@
             this.Controls.Add(this.toolComboBox);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Super Tool Box";
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();

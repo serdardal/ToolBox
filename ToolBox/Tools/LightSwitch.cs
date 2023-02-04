@@ -7,14 +7,9 @@ namespace ToolBox.Tools
     public class LightSwitch : Tool
     {
         private UserControlWithRadioButtons? UserControlWithRadioButtons { get; set; }
-        public LightSwitch(DirectoryCopier.ProgressChangeCallback updateProgressBarPercentage,
-            DirectoryCopier.CompletedCallback removeProgressBar)
-            
-            : base("Light Switch",
+        public LightSwitch() : base("Light Switch",
             @$"{FileHelper.TOOLS_SHARED_BASE_PATH}\LightSwitch",
-            @$"{FileHelper.TOOLS_LOCAL_BASE_PATH}\LightSwitch",
-            updateProgressBarPercentage,
-            removeProgressBar)
+            @$"{FileHelper.TOOLS_LOCAL_BASE_PATH}\LightSwitch")
         {
 
         }
